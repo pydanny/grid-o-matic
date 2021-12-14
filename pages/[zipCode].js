@@ -19,21 +19,36 @@ const url = 'https://api.oeus-kraken.energy/v1/graphql/'
 
 const fetcher = query => request(url, query)
 
-const getAllAvailableProducts = `query getAllAvailableProducts {
-  products {
-    id
-    availableFrom
-    availableTo
-    availabilityStatus    
-    code
-    description
-    displayName
-    fullName
-    isWholesale
-    prepay
-    term
-  }
-}`
+function getProductRatesUsingTDSP(TDSP){
+  const text = `query getRatesUsingLoadZone{
+    productsWithConciseApplicableRates {
+      id  
+      description
+      displayName
+      fullName
+      prepay
+      rates (filterRatesBy: { serviceProvider: ${TDSP} }) {
+        totalApplicableRate
+        kwhUsage
+        serviceProvider
+        serviceProviderConsumptionRate
+        serviceProviderStandingRate
+        loadZone
+        totalApplicableDayRate
+        totalApplicableNightRate
+        loadZoneDayTimeConsumptionRate
+        loadZoneNightTimeConsumptionRate
+        loadZoneConsumptionRate
+        serviceProviderStandingRateUnitType
+        serviceProviderConsumptionRateUnitType
+        loadZoneDayTimeRateUnitType
+        loadZoneNightTimeRateUnitType
+        loadZoneConsumptionRateUnitType
+      }
+    }
+  }`
+  return text
+}
 
 function productsToObject(products){
   let newProducts = {}
@@ -43,84 +58,24 @@ function productsToObject(products){
   return newProducts
 }
 
-async function getTDSPByZipCode(zipCode){
-  const query = `query getTDSPByPostalcode{
-    tdspByPostalcode(postalCode:${zipCode}){
-        loadZone
-        serviceProvider
-      }
-    }`
-    return query
-}
-
-function getProductRatesUsingLoadZone(loadZone){
-  const query = `query getRatesUsingLoadZone{
-    products{
-    id
-    availableFrom
-    availableTo
-    availabilityStatus    
-    code
-    description
-    displayName
-    fullName
-    isWholesale
-    prepay
-    term
-    rates(serviceProvider:${loadZone}){
-      agnosticRates{
-         consumptionRates{
-             loadZone
-         }
-      }
-      loadZoneRates{
-         consumptionRates{
-             loadZone
-         }
-      }
-      tdspRates{
-        consumptionRates{
-            band
-            serviceProvider
-            loadZone
-            timeOfUse
-        }
-        standingRates{
-            band
-            serviceProvider
-            loadZone
-        }
-      }
-    }
-  }
-  }`
-  return query
-}
 
 export default function Grid(){
   const router = useRouter()
   const { zipCode } = router.query  
 
-  // let { data, error } = useSWR(
-  //   getTDSPByZipCode(zipCode),
-  //   fetcher
-  // )
-  
-  // if (error) return <div>Oops!</div>
-  // if (!data) return <div>Loading...</div>   
-  
-
+  const text = getProductRatesUsingTDSP("CENTERPOINT")
   const {data, error} = useSWR(
-    getAllAvailableProducts,
+    text,
     fetcher
   )
   if (error) return <div>Oops!</div>
   if (!data) return <div>Loading...</div>  
-  console.log(data.products) 
+  console.log(data) 
+  const productData = data.productsWithConciseApplicableRates
   
-  const productNames = data.products.map(product => product.displayName)
-  const productIds = data.products.map(product => product.id)
-  const products = productsToObject(data.products)
+  const productNames = productData.map(product => product.displayName)
+  const productIds = productData.map(product => product.id)
+  const products = productsToObject(productData)
   console.log(products)
   return (
     <Layout>
@@ -157,6 +112,13 @@ export default function Grid(){
                 ))
               }                            
             </tr>   
+            <tr>
+              <td>Rates</td>
+              {productIds.map((id) => (                
+                <td key={id}>{products[id].rates[0].totalApplicableRate}</td>
+                ))
+              }                            
+            </tr>              
           </tbody>        
         </table>
       </div>
