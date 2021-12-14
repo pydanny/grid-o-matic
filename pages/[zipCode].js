@@ -84,47 +84,49 @@ export default function Grid(){
       console.log(products)
 
       return (
-          <div className="overflow-x-auto rounded-md">
+          <div>
             <p className="text-center text-2xl">Showing plans available in {zipCode}</p>
-            <table className="table-auto border rounded">
-              <tbody>
-              <tr className="border text-white font rounded">
-                <th style={darkSquare}></th>
-                {productNames.map((name) => (
-                    <th key={name} className="whitespace-nowrap px-4">{name}</th>
-                ))}
-              </tr>
-              <tr>
-                <th className="px-4">Prepay</th>
-                {productIds.map((id) => (
-                    <td key={id}><Checkbox value={products[id].prepay} /></td>
-                ))
-                }
-              </tr>
+            <div className="overflow-x-auto rounded-md">
+              <table className="table-auto border rounded">
+                <tbody>
+                <tr className="border text-white font rounded">
+                  <th style={darkSquare}></th>
+                  {productNames.map((name) => (
+                      <th key={name} className="whitespace-nowrap px-4">{name}</th>
+                  ))}
+                </tr>
+                <tr>
+                  <th className="px-4">Prepay</th>
+                  {productIds.map((id) => (
+                      <td key={id}><Checkbox value={products[id].prepay} /></td>
+                  ))
+                  }
+                </tr>
 
-              <tr>
-                <th className="px-4">Term</th>
-                {productIds.map((id) => (
-                    <td key={id}>{products[id].term} months</td>
-                ))
-                }
-              </tr>
-              <tr>
-                <th className="px-4">Description</th>
-                {productIds.map((id) => (
-                    <td key={id}>{products[id].description}</td>
-                ))
-                }
-              </tr>
-              <tr>
-                <th className="px-4">Rates</th>
-                {productIds.map((id) => (
-                    <td key={id}>{products[id].rates[0].totalApplicableRate}</td>
-                ))
-                }
-              </tr>
-              </tbody>
-            </table>
+                <tr>
+                  <th className="px-4">Term</th>
+                  {productIds.map((id) => (
+                      <td key={id}>{products[id].term} months</td>
+                  ))
+                  }
+                </tr>
+                <tr>
+                  <th className="px-4">Description</th>
+                  {productIds.map((id) => (
+                      <td key={id}>{products[id].description}</td>
+                  ))
+                  }
+                </tr>
+                <tr>
+                  <th className="px-4">Rates</th>
+                  {productIds.map((id) => (
+                      <td key={id}>{products[id].rates[0].totalApplicableRate}</td>
+                  ))
+                  }
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
       )
     }
