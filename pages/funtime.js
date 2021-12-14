@@ -7,6 +7,7 @@ import { request, gql } from 'graphql-request'
 
 import Checkbox from "../components/checkbox";
 import Layout from "../components/Layout";
+import tdspToLoaDZone from '../lib/utils.js'
 
 
 
@@ -15,81 +16,50 @@ const url = 'https://api.oeus-kraken.energy/v1/graphql/'
 const fetcher = query => request(url, query)
 
 
-
-function getTDSPByZipCode(zipCode){
-  const text = `query getTDSPByPostalcode{
-    tdspByPostalcode(postalCode:"${zipCode}"){
-        loadZone
-        serviceProvider
-      }
-    }`
-    return text
-}
-
-function getProductRatesUsingLoadZone(loadZone){
+function getProductRatesUsingTDSP(TDSP){
   const text = `query getRatesUsingLoadZone{
-    products{
-    id
-    availableFrom
-    availableTo
-    availabilityStatus    
-    code
-    description
-    displayName
-    fullName
-    isWholesale
-    prepay
-    term
-    rates(serviceProvider:"${loadZone}"){
-      agnosticRates{
-         consumptionRates{
-             loadZone
-         }
-      }
-      loadZoneRates{
-         consumptionRates{
-             loadZone
-         }
-      }
-      tdspRates{
-        consumptionRates{
-            band
-            serviceProvider
-            loadZone
-            timeOfUse
-        }
-        standingRates{
-            band
-            serviceProvider
-            loadZone
-        }
+    productsWithConciseApplicableRates {
+      id  
+      description
+      displayName
+      fullName
+      prepay
+      rates (filterRatesBy: { serviceProvider: ${TDSP} }) {
+        totalApplicableRate
+        kwhUsage
+        serviceProvider
+        serviceProviderConsumptionRate
+        serviceProviderStandingRate
+        loadZone
+        totalApplicableDayRate
+        totalApplicableNightRate
+        loadZoneDayTimeConsumptionRate
+        loadZoneNightTimeConsumptionRate
+        loadZoneConsumptionRate
+        serviceProviderStandingRateUnitType
+        serviceProviderConsumptionRateUnitType
+        loadZoneDayTimeRateUnitType
+        loadZoneNightTimeRateUnitType
+        loadZoneConsumptionRateUnitType
       }
     }
-  }
   }`
   return text
 }
 
 export default function Grid(){
 
-  const text = getTDSPByZipCode(77002)
-  console.log(text)
+  const text = getProductRatesUsingTDSP("CENTERPOINT")
   let { data, error } = useSWR(
     text,
     fetcher
   )
   
-  if (error) return <div>Oops!</div>
-  if (!data) return <div>Loading...</div>   
-  
-  const text2 = getProductRatesUsingLoadZone("LZ_HOUSTON")
-  data, error = { data, error } = useSWR(
-    text,
-    fetcher
-  )
+
   if (error) return <div>Oops!</div>
   if (!data) return <div>Loading...</div>   
   console.log(data)  
+
 
   return (
     <Layout>
