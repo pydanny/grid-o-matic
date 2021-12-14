@@ -43,7 +43,7 @@ function productsToObject(products){
   return newProducts
 }
 
-function getTDSPByZipCode(zipCode){
+async function getTDSPByZipCode(zipCode){
   const query = `query getTDSPByPostalcode{
     tdspByPostalcode(postalCode:${zipCode}){
         loadZone
@@ -100,7 +100,17 @@ function getProductRatesUsingLoadZone(loadZone){
 export default function Grid(){
   const router = useRouter()
   const { zipCode } = router.query  
-  const { data, error } = useSWR(
+
+  // let { data, error } = useSWR(
+  //   getTDSPByZipCode(zipCode),
+  //   fetcher
+  // )
+  
+  // if (error) return <div>Oops!</div>
+  // if (!data) return <div>Loading...</div>   
+  
+
+  const {data, error} = useSWR(
     getAllAvailableProducts,
     fetcher
   )
