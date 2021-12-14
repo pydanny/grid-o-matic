@@ -8,6 +8,11 @@ import { request, gql } from 'graphql-request'
 import Checkbox from "../components/checkbox";
 import Layout from "../components/Layout";
 
+Array.prototype.rotate = function(n) {
+  n = n % this.length;
+  return this.slice(n, this.length).concat(this.slice(0, n));
+}
+
 
 
 const url = 'https://api.oeus-kraken.energy/v1/graphql/'
@@ -31,6 +36,14 @@ const getAllAvailableProducts = `query getAllAvailableProducts {
   }
 }`
 
+function productsToObject(products){
+  let newProducts = {}
+  for (const product of products){
+    newProducts[product.id] = product    
+  }
+  return newProducts
+}
+
 
 
 export default function Grid(){
@@ -42,7 +55,12 @@ export default function Grid(){
   )
   if (error) return <div>Oops!</div>
   if (!data) return <div>Loading...</div>  
-  console.log(data) 
+  console.log(data.products) 
+  
+  const productNames = data.products.map(product => product.displayName)
+  const productIds = data.products.map(product => product.id)
+  const products = productsToObject(data.products)
+  console.log(products)
   return (
     <Layout>
       <div>
@@ -51,18 +69,19 @@ export default function Grid(){
         <table>
           <tbody>
             <tr>
-              <th>Name</th>
-              <th>Prepay</th>          
-              <th>Term</th>   
+              <th></th>
+              {productNames.map((name) => (
+                <th key={name}>{name}</th>
+              ))}
             </tr>
-            {data.products.map(({id, displayName, prepay, term}) => (
-              <tr key={id}>
-                <td>{displayName}</td>
-                <td>{Checkbox(prepay)}</td>
-                <td>{term}</td>
-              </tr>    
-              ))
-            }
+            <tr>
+              <td>Prepay</td>
+              {productIds.map((id) => (                
+                <td key={id}>{Checkbox(products[id].prepay)}</td>
+                ))
+              }                            
+            </tr>    
+
           </tbody>        
         </table>
       </div>
