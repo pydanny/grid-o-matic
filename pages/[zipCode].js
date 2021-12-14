@@ -5,6 +5,11 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { request, gql } from 'graphql-request'
 
+import Checkbox from "../components/checkbox";
+import Layout from "../components/Layout";
+
+
+
 const url = 'https://api.oeus-kraken.energy/v1/graphql/'
 
 const fetcher = query => request(url, query)
@@ -39,26 +44,28 @@ export default function Grid(){
   if (!data) return <div>Loading...</div>  
   console.log(data) 
   return (
-    <div>
-      <h1>Hello, World</h1>
-      <p>{zipCode}</p>
-      <table>
-        <tbody>
-          <tr>
-            <th>Name</th>
-            <th>Prepay</th>          
-            <th>Term</th>   
-          </tr>
-          {data.products.map(({id, displayName, prepay, term}) => (
-            <tr key={id}>
-              <td>{displayName}</td>
-              <td>{prepay}</td>
-              <td>{term}</td>
-            </tr>    
-            ))
-          }
-        </tbody>        
-      </table>
-    </div>
+    <Layout>
+      <div>
+        <h1>Hello, World</h1>
+        <p>{zipCode}</p>
+        <table>
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <th>Prepay</th>          
+              <th>Term</th>   
+            </tr>
+            {data.products.map(({id, displayName, prepay, term}) => (
+              <tr key={id}>
+                <td>{displayName}</td>
+                <td>{Checkbox(prepay)}</td>
+                <td>{term}</td>
+              </tr>    
+              ))
+            }
+          </tbody>        
+        </table>
+      </div>
+    </Layout>
   )
 }
