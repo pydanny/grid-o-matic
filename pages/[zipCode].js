@@ -67,22 +67,7 @@ function getProductRatesUsingLoadZone(loadZone){
             loadZone
         }
       }
-      tdspRates{
-        consumptionRates{
-            band
-            serviceProvider
-            loadZone
-            timeOfUse
-        }
-        standingRates{
-            band
-            serviceProvider
-            loadZone
-        }
-      }
     }
-  }
-  }
   `
   return query
 }
