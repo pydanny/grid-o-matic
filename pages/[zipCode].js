@@ -44,7 +44,44 @@ function productsToObject(products){
   return newProducts
 }
 
+const getTDSPByZipCode = `query getTDSPByPostalcode{
+  tdspByPostalcode(postalCode:${zipCode}){
+      loadZone
+      serviceProvider
+    }
+  }`
 
+
+const getProductRatesUsingLoadZone = `query getRatesUsingLoadZone{
+  products{
+  rates(serviceProvider:${loadZone}){
+    agnosticRates{
+       consumptionRates{
+           loadZone
+       }
+    }
+    loadZoneRates{
+       consumptionRates{
+           loadZone
+       }
+    }
+    tdspRates{
+      consumptionRates{
+          band
+          serviceProvider
+          loadZone
+          timeOfUse
+      }
+      standingRates{
+          band
+          serviceProvider
+          loadZone
+      }
+    }
+  }
+}
+}
+`
 
 export default function Grid(){
   const router = useRouter()

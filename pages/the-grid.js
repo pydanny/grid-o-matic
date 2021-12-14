@@ -1,15 +1,5 @@
 import Layout from "../components/Layout";
 
-    const tableStyle = {
-        height: "100%",
-        width: "100%",
-        border: "1px solid #ccc"
-    };
-
-    const theadStyle = {
-        backgroundColor: "#6018c8"
-    }
-
 export default function TheGrid() {
     const fakeData = [
         {
@@ -29,8 +19,8 @@ export default function TheGrid() {
     const tableRows = fakeData.map((product, index) => {
         return(
             <tr key={index}>
-                <td className="px-4 py-3 border">{product.name}</td>
-                <td className="px-4 py-3 border">{product.price}</td>
+                <td className="px-4 py-3 border border-purple-700">{product.name}</td>
+                <td className="px-4 py-3 border border-purple-700">{product.price}</td>
             </tr>
         )
     })
@@ -38,12 +28,12 @@ export default function TheGrid() {
 
     return(
         <Layout>
-            <h1 className="text-center">The Octo Grid</h1>
-            <table className="intertems-ce bg-transparent w-full border-collapse">
+            <h1 className="text-center text-4xl text-bold text-purple-700 font-bold my-6">The Octo Grid</h1>
+            <table className="bg-transparent w-full border-collapse">
                 <thead>
-                    <tr className="text-white" style={theadStyle}>
-                        <th className="px-4 py-3 border">Product</th>
-                        <th className="px-4 py-3 border">Pricing</th>
+                    <tr className="text-white bg-purple-800">
+                        <th className="px-4 py-3">Product</th>
+                        <th className="px-4 py-3">Pricing</th>
                     </tr>
                 </thead>
                 <tbody>
