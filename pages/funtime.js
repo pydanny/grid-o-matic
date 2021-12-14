@@ -21,18 +21,18 @@ const fetcher = query => request(url, query)
 
 
 
-async function getTDSPByZipCode(zipCode){
-  const query = `query getTDSPByPostalcode{
-    tdspByPostalcode(postalCode:${zipCode}){
+function getTDSPByZipCode(zipCode){
+  const text = `query getTDSPByPostalcode{
+    tdspByPostalcode(postalCode:"${zipCode}"){
         loadZone
         serviceProvider
       }
     }`
-    return query
+    return text
 }
 
 function getProductRatesUsingLoadZone(loadZone){
-  const query = `query getRatesUsingLoadZone{
+  const text = `query getRatesUsingLoadZone{
     products{
     id
     availableFrom
@@ -72,13 +72,15 @@ function getProductRatesUsingLoadZone(loadZone){
     }
   }
   }`
-  return query
+  return text
 }
 
 export default function Grid(){
 
-  let { data, error } = useSWR(
-    getTDSPByZipCode(77002),
+  const text = getTDSPByZipCode(77002)
+  console.log(text)
+  const { data, error } = useSWR(
+    text,
     fetcher
   )
   
@@ -90,7 +92,7 @@ export default function Grid(){
     <Layout>
       <div>
         <h1>Hello, World</h1>
-        <p>{zipCode}</p>
+        <p>12345</p>
       </div>
     </Layout>
   )
