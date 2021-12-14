@@ -3,12 +3,15 @@ import Image from "next/image";
 import Layout from "../components/layout";
 import styles from "../styles/Home.module.css";
 import { useRouter } from 'next/router'
+import { useState } from "react";
 
 import zipCodeToTdsp from "../lib/zipcodeToTdsp"
 
 
 export default function Home() {
     const router = useRouter()
+    const [error, setError] = useState()
+
 
     function handleSubmit(event){
         event.preventDefault()
@@ -16,10 +19,17 @@ export default function Home() {
         if (zipCode in zipCodeToTdsp){
             router.push('/'+zipCode)
         }
+        setError("Please enter a valid zip code.")
     }
 
     function handleChange(event){
         // do nothing
+    }
+
+    const errorMessage = () => {
+        if (error) {
+            return(<p className="text-red-400 mb-1">{error}</p>)
+        }
     }
 
     return (
@@ -39,6 +49,7 @@ export default function Home() {
                                 name="zipCode" required
                                 type="text" className="form-input rounded mt-1 block w-full border border-gray-300 my-4" />
                         </label>
+                        {errorMessage()}
                         <button className="bg-purple-600 hover:bg-purple-700 text-white text-sm px-4 py-2  border rounded-full">Submit</button>
                     </form>
                 </div>
