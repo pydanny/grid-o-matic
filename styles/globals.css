@@ -35,10 +35,18 @@ tr td:first-child {
 
 tr:not(:first-child) th {
   text-align: left;
+  background-color: #9333ea;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  color: white
 }
 
 th, td {
   padding: 0.5rem 0.25rem;
+}
+
+tr:not(:first-child):nth-child(odd) {
+  background-color: #f0f0f0;
 }
 
 @tailwind base;

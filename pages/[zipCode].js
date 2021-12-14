@@ -87,9 +87,9 @@ export default function Grid(){
           <div>
             <p className="text-center text-2xl">Showing plans available in {zipCode}</p>
             <div className="overflow-x-auto rounded-md">
-              <table className="table-auto border rounded">
+              <table className="table-auto border rounded border-purple-600">
                 <tbody>
-                <tr className="border text-white font rounded">
+                <tr className="border text-white border-purple-600">
                   <th style={darkSquare}></th>
                   {productNames.map((name) => (
                       <th key={name} className="whitespace-nowrap px-4">{name}</th>
