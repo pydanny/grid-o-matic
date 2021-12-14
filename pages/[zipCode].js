@@ -39,6 +39,37 @@ const getTDSPByZipCode = `query getTDSPByPostalcode{
   }`
 
 
+const getProductRatesUsingLoadZone = `query getRatesUsingLoadZone{
+  products{
+  rates(serviceProvider:${loadZone}){
+    agnosticRates{
+       consumptionRates{
+           loadZone
+       }
+    }
+    loadZoneRates{
+       consumptionRates{
+           loadZone
+       }
+    }
+    tdspRates{
+      consumptionRates{
+          band
+          serviceProvider
+          loadZone
+          timeOfUse
+      }
+      standingRates{
+          band
+          serviceProvider
+          loadZone
+      }
+    }
+  }
+}
+}
+`
+
 export default function Grid(){
   const router = useRouter()
   const { zipCode } = router.query  
