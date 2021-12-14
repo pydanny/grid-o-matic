@@ -9,32 +9,56 @@ const url = 'https://api.oeus-kraken.energy/v1/graphql/'
 
 const fetcher = query => request(url, query)
 
-const queryGetAllAvailableProducts = `query getAllAvailableProducts {
+const getAllAvailableProducts = `query getAllAvailableProducts {
   products {
     id
-    fullName
-    displayName
     availableFrom
     availableTo
-    availabilityStatus
-    term
+    availabilityStatus    
+    code
+    description
+    displayName
+    fullName
     isWholesale
+    prepay
+    term
+    
   }
 }`
+
 
 
 export default function Grid(){
   const router = useRouter()
   const { zipCode } = router.query  
   const { data, error } = useSWR(
-    queryGetAllAvailableProducts,
+    getAllAvailableProducts,
     fetcher
   )
-  console.log(data)
+  if (error) return <div>Oops!</div>
+  if (!data) return <div>Loading...</div>  
+  console.log(data) 
   return (
     <div>
       <h1>Hello, World</h1>
       <p>{zipCode}</p>
+      <table>
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <th>Prepay</th>          
+            <th>Term</th>   
+          </tr>
+          {data.products.map(({id, displayName, prepay, term}) => (
+            <tr key={id}>
+              <td>{displayName}</td>
+              <td>{prepay}</td>
+              <td>{term}</td>
+            </tr>    
+            ))
+          }
+        </tbody>        
+      </table>
     </div>
   )
 }
