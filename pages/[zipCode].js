@@ -106,8 +106,22 @@ export default function Grid(){
                 <td key={id}>{Checkbox(products[id].prepay)}</td>
                 ))
               }                            
-            </tr>    
+            </tr> 
 
+            <tr>
+              <td>Term</td>
+              {productIds.map((id) => (                
+                <td key={id}>{products[id].term} months</td>
+                ))
+              }                            
+            </tr>                
+            <tr>
+              <td>Description</td>
+              {productIds.map((id) => (                
+                <td key={id}>{products[id].description}</td>
+                ))
+              }                            
+            </tr>   
           </tbody>        
         </table>
       </div>
