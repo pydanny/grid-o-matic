@@ -31,7 +31,10 @@ tr:first-child,
 tr td:first-child {
   background-color: #9333ea;
   color: white;
-  font-weight: bold;
+}
+
+tr:not(:first-child) th {
+  text-align: left;
 }
 
 th, td {
