@@ -1,18 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react';
 
 import useSWR from 'swr'
 import { request, gql } from 'graphql-request'
 
 import Checkbox from "../components/checkbox";
 import Layout from "../components/Layout";
-
-Array.prototype.rotate = function(n) {
-  n = n % this.length;
-  return this.slice(n, this.length).concat(this.slice(0, n));
-}
 
 
 
@@ -46,7 +40,7 @@ function getProductRatesUsingLoadZone(loadZone){
     isWholesale
     prepay
     term
-    rates(serviceProvider:${loadZone}){
+    rates(serviceProvider:"${loadZone}"){
       agnosticRates{
          consumptionRates{
              loadZone
@@ -77,7 +71,6 @@ function getProductRatesUsingLoadZone(loadZone){
 }
 
 export default function Grid(){
-  const [tdsps, setTdsps] = useState()
 
   const text = getTDSPByZipCode(77002)
   console.log(text)
@@ -89,7 +82,7 @@ export default function Grid(){
   if (error) return <div>Oops!</div>
   if (!data) return <div>Loading...</div>   
   
-  
+  const text2 = getProductRatesUsingLoadZone("LZ_HOUSTON")
   data, error = { data, error } = useSWR(
     text,
     fetcher
