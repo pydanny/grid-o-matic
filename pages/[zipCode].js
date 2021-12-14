@@ -31,6 +31,12 @@ const getAllAvailableProducts = `query getAllAvailableProducts {
   }
 }`
 
+const getTDSPByZipCode = `query getTDSPByPostalcode{
+  tdspByPostalcode(postalCode:${zipCode}){
+      loadZone
+      serviceProvider
+    }
+  }`
 
 
 export default function Grid(){
