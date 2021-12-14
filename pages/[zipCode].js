@@ -83,16 +83,26 @@ export default function Grid(){
       const products = productsToObject(productData)
       console.log(products)
 
+      const stylizeProductName = (productName) => {
+        if (productName.indexOf("Octopus") > -1) {
+          return(<span><strong>Octopus</strong>{productName.replace("Octopus", "")}</span>)
+        } else if (productName.indexOf("Octo") > -1) {
+          return(<span><strong>Octo</strong>{productName.replace("Octo", "")}</span>)
+        } else {
+          return productName
+        }
+      }
+
       return (
           <div>
-            <p className="text-center text-2xl">Showing plans available in {zipCode}</p>
+            <p className="text-center text-2xl pb-4">Showing plans available in {zipCode}</p>
             <div className="overflow-x-auto rounded-md">
               <table className="table-auto border rounded border-purple-600">
                 <tbody>
                 <tr className="border text-white border-purple-600">
                   <th style={darkSquare}></th>
                   {productNames.map((name) => (
-                      <th key={name} className="whitespace-nowrap px-4">{name}</th>
+                      <th key={name} className="whitespace-nowrap px-4">{stylizeProductName(name)}</th>
                   ))}
                 </tr>
                 <tr>
