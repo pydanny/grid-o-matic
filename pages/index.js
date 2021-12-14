@@ -8,41 +8,41 @@ import zipCodeToTdsp from "../lib/zipcodeToTdsp"
 
 
 export default function Home() {
-  const router = useRouter()
+    const router = useRouter()
 
-  function handleSubmit(event){ 
-    event.preventDefault()
-    const zipCode = event.target.zipCode.value
-    if (zipCode in zipCodeToTdsp){
-      router.push('/'+zipCode)
+    function handleSubmit(event){
+        event.preventDefault()
+        const zipCode = event.target.zipCode.value
+        if (zipCode in zipCodeToTdsp){
+            router.push('/'+zipCode)
+        }
     }
-  }
 
-  function handleChange(event){ 
-    // do nothing
-  }  
+    function handleChange(event){
+        // do nothing
+    }
 
-  return (
-    <Layout>
-      <Head>
-        <title>Octogrid</title>
-        <meta name="description" content="Discover Octopus plans!" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    return (
+        <Layout>
+            <Head>
+                <title>Octogrid</title>
+                <meta name="description" content="Discover Octopus plans!" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
 
-      <main>
-
-        <form onSubmit={handleSubmit}>
-          <label className="block">
-              <h1 className="text-3xl font-bold underline">Enter your zip code</h1>
-              <input
-                name="zipCode" required
-                type="text" className="form-input mt-1 block w-full" />
-          </label>
-          <button
-            className="text-color-white-500 rounded-full bg-violet-500 hover:bg-violet-400 active:bg-violet-600 focus:outline-none focus:ring focus:ring-violet-300" type="submit" value="Submit">Submit</button>
-        </form>
-      </main>
-    </Layout>
-  );
+            <main>
+                <div className="container w-100">
+                    <form onSubmit={handleSubmit}>
+                        <label className="block">
+                            <h1 className="text-3xl font-bold text-purple-600 mb-4">Enter your zip code</h1>
+                            <input
+                                name="zipCode" required
+                                type="text" className="form-input rounded mt-1 block w-full border border-gray-300 my-4" />
+                        </label>
+                        <button className="bg-purple-600 hover:bg-purple-700 text-white text-sm px-4 py-2  border rounded-full">Submit</button>
+                    </form>
+                </div>
+            </main>
+        </Layout>
+    );
 }
