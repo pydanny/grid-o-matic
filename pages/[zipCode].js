@@ -45,6 +45,62 @@ function getProductRatesUsingTDSP(TDSP){
   return text
 }
 
+function getMoreProductDetailsByTDSP(TDSP) {
+  const text = `query getRatesUsingLoadZone{
+      products{
+      id
+      availableFrom
+      availableTo
+      availabilityStatus    
+      code
+      description
+      displayName
+      fullName
+      isWholesale
+      prepay
+      term
+      rates(serviceProvider:AEP_TNC){
+        agnosticRates{
+          consumptionRates{
+            pricePerUnit
+            band
+            serviceProvider
+            loadZone
+            timeOfUse
+          }
+        }
+        loadZoneRates{
+          consumptionRates{
+            pricePerUnit
+            band
+            serviceProvider
+            loadZone
+            timeOfUse
+          }
+        }
+        tdspRates{
+          consumptionRates{
+            unitType
+            pricePerUnit
+            band
+            serviceProvider
+            loadZone
+            timeOfUse
+          }
+          standingRates{
+            unitType
+            pricePerUnit
+            band
+            serviceProvider
+            loadZone
+          }
+        }
+      }
+    }
+  }`
+  return text
+}
+
 function productsToObject(products){
   let newProducts = {}
   for (const product of products){
@@ -69,6 +125,13 @@ export default function Grid(){
       text,
       fetcher
   )
+
+  // Toggle me to see a different query
+  // const possibly_better_text = getMoreProductDetailsByTDSP(TDSP)
+  // const {data, error} = useSWR(
+  //   possibly_better_text,
+  //   fetcher
+  // )
 
   const rateTable = () => {
     if (error) return <div>Oops!</div>
