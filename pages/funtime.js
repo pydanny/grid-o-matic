@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState } from 'react';
 
 import useSWR from 'swr'
 import { request, gql } from 'graphql-request'
@@ -76,10 +77,11 @@ function getProductRatesUsingLoadZone(loadZone){
 }
 
 export default function Grid(){
+  const [tdsps, setTdsps] = useState()
 
   const text = getTDSPByZipCode(77002)
   console.log(text)
-  const { data, error } = useSWR(
+  let { data, error } = useSWR(
     text,
     fetcher
   )
@@ -87,7 +89,15 @@ export default function Grid(){
   if (error) return <div>Oops!</div>
   if (!data) return <div>Loading...</div>   
   
-  console.log(data)
+  
+  data, error = { data, error } = useSWR(
+    text,
+    fetcher
+  )
+  if (error) return <div>Oops!</div>
+  if (!data) return <div>Loading...</div>   
+  console.log(data)  
+
   return (
     <Layout>
       <div>
