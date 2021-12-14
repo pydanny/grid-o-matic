@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Layout from "../components/layout";
 import styles from "../styles/Home.module.css";
 import { useRouter } from 'next/router'
 
@@ -22,14 +23,14 @@ export default function Home() {
   }  
 
   return (
-    <div className={styles.container}>
+    <Layout>
       <Head>
         <title>Octogrid</title>
         <meta name="description" content="Discover Octopus plans!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main>
         <h1 className="text-3xl font-bold underline">
           Enter your zip code
         </h1>
@@ -44,6 +45,6 @@ export default function Home() {
           <input type="submit" value="Submit" />
           </form>
       </main>
-    </div>
+    </Layout>
   );
 }
