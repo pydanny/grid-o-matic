@@ -6,7 +6,7 @@ import useSWR from 'swr'
 import { request, gql } from 'graphql-request'
 
 import Checkbox from "../components/checkbox";
-import Layout from "../components/Layout";
+import Layout from "../components/layout";
 import zipCodeToTdsp from "../lib/zipcodeToTdsp"
 
 

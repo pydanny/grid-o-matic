@@ -1,5 +1,5 @@
 import { gql, GraphQLClient } from "graphql-request";
-import Layout from "../components/Layout";
+import Layout from "../components/layout";
 import { useState, useEffect } from 'react';
 
 const url = 'https://api.oeus-kraken.energy/v1/graphql/'
