@@ -8,12 +8,6 @@ import { request, gql } from 'graphql-request'
 import Checkbox from "../components/checkbox";
 import Layout from "../components/Layout";
 
-Array.prototype.rotate = function(n) {
-  n = n % this.length;
-  return this.slice(n, this.length).concat(this.slice(0, n));
-}
-
-
 
 const url = 'https://api.oeus-kraken.energy/v1/graphql/'
 
