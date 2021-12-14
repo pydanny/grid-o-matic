@@ -17,6 +17,16 @@ a {
   box-sizing: border-box;
 }
 
+.table-transpose, .table-transpose tbody {
+  display: flex;
+  flex-direction: row;
+}
+
+.table-transpose tr {
+  display: flex;
+  flex-direction: column;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
