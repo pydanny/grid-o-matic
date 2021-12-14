@@ -31,19 +31,17 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1 className="text-3xl font-bold underline">
-          Enter your zip code
-        </h1>
 
         <form onSubmit={handleSubmit}>
           <label className="block">
-              <span className="text-gray-700">Zip Code</span>
+              <h1 className="text-3xl font-bold underline">Enter your zip code</h1>
               <input
                 name="zipCode" required
                 type="text" className="form-input mt-1 block w-full" />
           </label>
-          <input type="submit" value="Submit" />
-          </form>
+          <button
+            className="text-color-white-500 rounded-full bg-violet-500 hover:bg-violet-400 active:bg-violet-600 focus:outline-none focus:ring focus:ring-violet-300" type="submit" value="Submit">Submit</button>
+        </form>
       </main>
     </Layout>
   );
