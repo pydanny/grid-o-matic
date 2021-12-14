@@ -56,19 +56,44 @@ function getTDSPByZipCode(zipCode){
 function getProductRatesUsingLoadZone(loadZone){
   const query = `query getRatesUsingLoadZone{
     products{
+    id
+    availableFrom
+    availableTo
+    availabilityStatus    
+    code
+    description
+    displayName
+    fullName
+    isWholesale
+    prepay
+    term
     rates(serviceProvider:${loadZone}){
       agnosticRates{
-        consumptionRates{
-            loadZone
-        }
+         consumptionRates{
+             loadZone
+         }
       }
       loadZoneRates{
+         consumptionRates{
+             loadZone
+         }
+      }
+      tdspRates{
         consumptionRates{
+            band
+            serviceProvider
+            loadZone
+            timeOfUse
+        }
+        standingRates{
+            band
+            serviceProvider
             loadZone
         }
       }
     }
-  `
+  }
+  }`
   return query
 }
 
