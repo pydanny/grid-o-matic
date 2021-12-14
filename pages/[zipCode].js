@@ -7,6 +7,7 @@ import { request, gql } from 'graphql-request'
 
 import Checkbox from "../components/checkbox";
 import Layout from "../components/Layout";
+import zipCodeToTdsp from "../lib/zipcodeToTdsp"
 
 
 const url = 'https://api.oeus-kraken.energy/v1/graphql/'
@@ -57,7 +58,9 @@ export default function Grid(){
   const router = useRouter()
   const { zipCode } = router.query  
 
-  const text = getProductRatesUsingTDSP("CENTERPOINT")
+  const TDSP = zipCodeToTdsp[zipCode]
+
+  const text = getProductRatesUsingTDSP(TDSP)
   const {data, error} = useSWR(
     text,
     fetcher
