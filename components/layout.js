@@ -7,12 +7,6 @@ const layoutStyle = {
     width: "100%"
 };
 
-const contentStyle = {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column"
-};
-
 const Layout = props => (
     <div className="Layout" style={layoutStyle}>
         <NavBar />
