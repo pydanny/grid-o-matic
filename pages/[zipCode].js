@@ -19,23 +19,6 @@ const url = 'https://api.oeus-kraken.energy/v1/graphql/'
 
 const fetcher = query => request(url, query)
 
-const getAllAvailableProducts = `query getAllAvailableProducts {
-  products {
-    id
-    availableFrom
-    availableTo
-    availabilityStatus    
-    code
-    description
-    displayName
-    fullName
-    isWholesale
-    prepay
-    term
-    
-  }
-}`
-
 function productsToObject(products){
   let newProducts = {}
   for (const product of products){
