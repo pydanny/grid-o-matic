@@ -36,3 +36,5 @@ yarn-error.log*
 # Package locks
 **/package-lock.json
 **/yarn.lock
+pages/music.js
+public/octopusMelodies.js
