@@ -1,4 +1,10 @@
-import styles from "../styles/TheGrid.module.css";
+import Layout from "../components/Layout";
+
+const tableStyle = {
+    height: "100%",
+    width: "100%",
+    border: "1px solid #ccc"
+};
 
 export default function TheGrid() {
     const fakeData = [
@@ -18,23 +24,25 @@ export default function TheGrid() {
 
     const tableRows = fakeData.map((product, index) => {
         return(
-            <tr>
-                <td>{product.name}</td>
-                <td>{product.price}</td>
+            <tr key={index}>
+                <td className="px-4 py-3 border">{product.name}</td>
+                <td className="px-4 py-3 border">{product.price}</td>
             </tr>
         )
     })
 
 
     return(
-        <table className="table-auto hover:table-fixed">
-            <tbody>
-                <tr>
-                    <th>Product</th>
-                    <th>Pricing</th>
-                </tr>
-                {tableRows}
-            </tbody>
-        </table>
+        <Layout>
+            <table className="intertems-ce bg-transparent w-full border-collapse">
+                <tbody>
+                    <tr>
+                        <th className="px-4 py-3 border">Product</th>
+                        <th className="px-4 py-3 border">Pricing</th>
+                    </tr>
+                    {tableRows}
+                </tbody>
+            </table>
+        </Layout>
     )
-    }
+}
