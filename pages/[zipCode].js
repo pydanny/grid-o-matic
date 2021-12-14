@@ -54,6 +54,17 @@ const getTDSPByZipCode = `query getTDSPByPostalcode{
 
 const getProductRatesUsingLoadZone = `query getRatesUsingLoadZone{
   products{
+  id
+  availableFrom
+  availableTo
+  availabilityStatus    
+  code
+  description
+  displayName
+  fullName
+  isWholesale
+  prepay
+  term
   rates(serviceProvider:${loadZone}){
     agnosticRates{
        consumptionRates{
