@@ -32,7 +32,6 @@ const getAllAvailableProducts = `query getAllAvailableProducts {
     isWholesale
     prepay
     term
-    
   }
 }`
 
@@ -44,44 +43,49 @@ function productsToObject(products){
   return newProducts
 }
 
-const getTDSPByZipCode = `query getTDSPByPostalcode{
-  tdspByPostalcode(postalCode:${zipCode}){
-      loadZone
-      serviceProvider
-    }
-  }`
-
-
-const getProductRatesUsingLoadZone = `query getRatesUsingLoadZone{
-  products{
-  rates(serviceProvider:${loadZone}){
-    agnosticRates{
-       consumptionRates{
-           loadZone
-       }
-    }
-    loadZoneRates{
-       consumptionRates{
-           loadZone
-       }
-    }
-    tdspRates{
-      consumptionRates{
-          band
-          serviceProvider
-          loadZone
-          timeOfUse
+function getTDSPByZipCode(zipCode){
+  const query = `query getTDSPByPostalcode{
+    tdspByPostalcode(postalCode:${zipCode}){
+        loadZone
+        serviceProvider
       }
-      standingRates{
-          band
-          serviceProvider
-          loadZone
+    }`
+    return query
+}
+
+function getProductRatesUsingLoadZone(loadZone){
+  const query = `query getRatesUsingLoadZone{
+    products{
+    rates(serviceProvider:${loadZone}){
+      agnosticRates{
+        consumptionRates{
+            loadZone
+        }
+      }
+      loadZoneRates{
+        consumptionRates{
+            loadZone
+        }
+      }
+      tdspRates{
+        consumptionRates{
+            band
+            serviceProvider
+            loadZone
+            timeOfUse
+        }
+        standingRates{
+            band
+            serviceProvider
+            loadZone
+        }
       }
     }
   }
+  }
+  `
+  return query
 }
-}
-`
 
 export default function Grid(){
   const router = useRouter()
