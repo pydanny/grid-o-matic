@@ -1,12 +1,12 @@
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { GoCheck, GoX } from 'react-icons/go';
 
 export default function Checkbox(props){
   if (props.value){
     return (
-      <FaCheckCircle size={props.size || 20} className="text-green-500" />
+      <GoCheck size={props.size || 20} className="text-green-500" />
     )  
   }
   return (
-    <FaTimesCircle size={props.size || 20} className="text-red-500" />
+    <GoX size={props.size || 20} className="text-red-500" />
   )
 }

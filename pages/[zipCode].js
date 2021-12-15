@@ -134,7 +134,7 @@ export default function Grid(){
     ["Term", "term"],
     ["Description", "description"],
     ["Prepay", "prepay"],
-    ["Choose Plan", "chooseProduct"]
+    ["Get Started", "getStarted"]
   ]
 
   // const text = getProductRatesUsingTDSP(TDSP)
@@ -217,12 +217,12 @@ export default function Grid(){
           } else if (productPair[1] === "displayName") {
             return(<td key={productPair[0] + "-" + index} className='whitespace-nowrap productCell'>{stylizeProductName(product[productPair[1]])}</td>)
           } else if (productPair[1] === "prepay") {
-            return(<td key={productPair[0] + "-" + index}><Checkbox value={product[productPair[1]]} /></td>)
+            return(<td key={productPair[0] + "-" + index}><Checkbox value={product[productPair[1]]} size="30" /></td>)
           } else if (productPair[1] === "term") {
             return(<td key={productPair[0] + "-" + index}>{product[productPair[1]]}-month</td>)
           } else if (productPair[1] === "solar") {
-            return(<td key={productPair[0] + "-" + index}><Checkbox value={!noSolar.includes(product.code)} /></td>)
-          } else if (productPair[1] === "chooseProduct") {
+            return(<td key={productPair[0] + "-" + index}><Checkbox value={!noSolar.includes(product.code)} size="30" /></td>)
+          } else if (productPair[1] === "getStarted") {
             return(<td key={productPair[0] + "-" + index}>{getSignUpButton(product)}</td>)
           }  else if (productPair[1] === "accent") {
             return(<td key={productPair[1] + "-" + index} className="accentCell">
@@ -257,18 +257,18 @@ export default function Grid(){
 
       const getSignUpButton = (product) => {
         return(
-            <a className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-1 rounded-full" href={`https://octopusenergy.com/quick-start?product=${product.id}&zipcode=${zipCode}`}>Choose Plan</a>
+            <a className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-1 rounded" href={`https://octopusenergy.com/quick-start?product=${product.id}&zipcode=${zipCode}`}>Get Started</a>
 
         )
       }
 
       return (
           <div>
-            <p className="text-center text-2xl pb-4">Showing plans available in {zipCode}</p>
+            <p className="text-center text-2xl pb-4 text-gray-200">Showing plans available in {zipCode}</p>
             <div className="text-center mb-3">
               {prepayProductToggleButton()}
             </div>
-            <div className="overflow-x-auto rounded-md">
+            <div className="overflow-x-auto rounded-md pb-8">
               <table className="table-auto table-transpose">
                 <tbody>
                 <tr>{headerCols()}</tr>
@@ -282,7 +282,8 @@ export default function Grid(){
   }
 
   return (
-      <Layout>
+      <div>
+        <Layout>
         <Head>
          <link
           rel="apple-touch-icon"
@@ -314,5 +315,11 @@ export default function Grid(){
           { rateTable() }
         </div>
       </Layout>
+      <style jsx global>{`
+        body {
+          background-color: #190648;
+        }
+      `}</style>
+      </div>
   )
 }

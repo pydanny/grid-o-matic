@@ -17,6 +17,10 @@ a {
     box-sizing: border-box;
 }
 
+.headerShadow {
+    filter: drop-shadow(0 20px 13px rgb(74 19 160 / 0.15)) drop-shadow(0 8px 5px rgb(74 19 160 / 0.25));
+}
+
 .table-transpose, .table-transpose tbody {
     display: flex;
     flex-direction: row;
@@ -49,7 +53,7 @@ tr td:first-child {
     justify-content: flex-end;
     font-weight: normal;
     padding: 0.5rem 0;
-    color: #333333;
+    color: #dedede;
     white-space: nowrap;
 }
 
@@ -61,7 +65,11 @@ tr td:first-child {
 
 /* Dark striped rows */
 .table-transpose td:not(:first-child):nth-child(odd) {
-    background-color: #190648;
+    color: white;
+}
+
+.table-transpose td:not(:first-child):nth-child(even) {
+    background-color: rgb(76 29 149);
     color: white;
 }
 
@@ -92,7 +100,7 @@ tr td:first-child {
 }
 
 .table-transpose tr:not(:last-child):not(:first-child) {
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #6022c8;
 }
 
 @tailwind base;
