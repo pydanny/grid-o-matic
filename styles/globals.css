@@ -2,35 +2,34 @@
 
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    padding: 0;
+    margin: 0;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .table-transpose, .table-transpose tbody {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .table-transpose tr {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
-tr:first-child,
 tr td:first-child {
-  background-color: #9333ea;
-  color: white;
+    background-color: #6022c8;
+    color: white;
 }
 
 tr td:first-child {
@@ -40,47 +39,59 @@ tr td:first-child {
 .table-transpose td,
 .table-transpose th {
     display: flex;
-    height: 50px;
+    min-height: 50px;
     align-items: center;
     padding: 0.5rem 1rem;
 }
 
+/* Row description labels*/
+.table-transpose th {
+    justify-content: flex-end;
+    font-weight: normal;
+    padding: 0.5rem 0;
+    color: #333333;
+}
+
 .table-transpose td {
     width: 250px;
-    min-height: 50px;
     justify-content: center;
     align-items: center;
 }
 
-
-
-
-.flag {
-  width: 100%;
-  height: 56px;
-  box-sizing: content-box;
-  padding-top: 15px;
-  position: relative;
-  background: #32557f;
-  color: #7eb4e2;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-align: center;
-  text-transform: uppercase;
+/* Dark striped rows */
+.table-transpose td:not(:first-child):nth-child(odd) {
+    background-color: #190648;
+    color: white;
 }
 
-.flag::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 0;
-    border-bottom: 13px solid #7eb4e2;
-    border-left: 55px solid transparent;
-    border-right: 55px solid transparent;
-  }
+.accentCell {
+    padding: 0 !important;
+}
 
+.triangleAccent {
+    width: 100%;
+    height: 117px;
+}
+
+/* Product name & triangle accent */
+.table-transpose td:nth-child(2),
+.table-transpose th:nth-child(2) {
+    height: 117px !important;
+}
+
+/* Description row */
+.table-transpose td:nth-child(6) {
+    height: 75px !important;
+}
+
+.table-transpose tr {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.table-transpose tr:not(:last-child):not(:first-child) {
+    border-right: 1px solid #ccc;
+}
 
 @tailwind base;
 @tailwind components;
