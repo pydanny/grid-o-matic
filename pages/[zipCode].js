@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState } from 'react';
 
 import useSWR from 'swr'
 import { request, gql } from 'graphql-request'
@@ -117,6 +118,7 @@ const darkSquare = {
 export default function Grid(){
   const router = useRouter()
   const { zipCode } = router.query
+  const [showPrepay, setShowPrepay] = useState(false)
 
   const TDSP = zipCodeToTdsp[zipCode]
 
@@ -141,6 +143,22 @@ export default function Grid(){
       fetcher
   )
 
+  const validProductCode = [
+    // "OCTOPUS-MONTH-TO-MONTH",
+    // "OCTOPUS-EXTRA-90-DAY-FIXED",
+    // "OCTOPLUS-90-DAY-FIXED",
+    "OCTOPUS-EXTRA-365-DAY-FIXED", // Prime
+    "OCTOPUS-DRIVE-365-DAY-FIXED",
+    "OCTOGO-12M",
+    // "OCTOGO-30-DAY-FIXED",
+    // "OCTOGO-90-DAY-FIXED",
+    // "OCTOGO-365-DAY-FIXED",
+    // "OCTOGO-MTM-FIXED",
+    "OCTOPLUS-24M",
+    "OCTOPLUS-12M",
+    "OCTOPLUS-36M"
+]
+
   const rateTable = () => {
     if (error) return <div>Oops!</div>
     if (!data) {
@@ -148,6 +166,10 @@ export default function Grid(){
     } else {
       console.log(data)
       const products = data.products
+
+      const filteredProducts = products.filter(product => {
+        return (validProductCode.includes(product.code) && product.prepay == showPrepay)
+      })
 
       const stylizeProductName = (productName) => {
         if (productName.indexOf("Octopus") > -1) {
@@ -173,32 +195,49 @@ export default function Grid(){
             const standingRate = parseFloat(product.rates.tdspRates.standingRates[0].pricePerUnit/1000);
             const calculatedRate = loadZoneRate + tdspConsumptionRate + standingRate;
 
-            return(<td key={productPair[0]-index}>{calculatedRate.toFixed(1).split(".0")[0]}&#162;</td>)
-          } else if (productPair[1] == "displayName") {
-            return(<td key={productPair[0]-index} className='whitespace-nowrap'>{stylizeProductName(product[productPair[1]])}</td>)
-          } else if (productPair[1] == "prepay") {
-            return(<td key={productPair[0]-index}><Checkbox value={product[productPair[1]]} /></td>)
-          } else if (productPair[1] == "term") {
-            return(<td key={productPair[0]-index}>{product[productPair[1]]}-month</td>)
+            return(<td key={productPair[0] + "-" + index}>{calculatedRate.toFixed(1).split(".0")[0]}&#162;</td>)
+          } else if (productPair[1] === "displayName") {
+            return(<td key={productPair[0] + "-" + index} className='whitespace-nowrap'>{stylizeProductName(product[productPair[1]])}</td>)
+          } else if (productPair[1] === "prepay") {
+            return(<td key={productPair[0] + "-" + index}><Checkbox value={product[productPair[1]]} /></td>)
+          } else if (productPair[1] === "term") {
+            return(<td key={productPair[0] + "-" + index}>{product[productPair[1]]}-month</td>)
           } else {
-            return(<td key={productPair[0]-index}>{product[productPair[1]]}</td>)
+            return(<td key={productPair[0] + "-" + index}>{product[productPair[1]]}</td>)
           }
         })
       }
 
       const productRows = () => {
-        return products.map((product, index) => {
+        return filteredProducts.map((product, index) => {
           return(<tr key={`product-${product.id}-${index}`}>{getProductCols(product)}</tr>)
         })
+      }
+
+      const handlePrepayToggle = (e) => {
+        e.preventDefault();
+        setShowPrepay(!showPrepay);
+      }
+
+      const showHideButtonText = () => {
+        if (showPrepay) {
+          return "Hide";
+        }
+        return "Show";
       }
 
       return (
           <div>
             <p className="text-center text-2xl pb-4">Showing plans available in {zipCode}</p>
+            <button
+                className="bg-purple-600 hover:bg-purple-700 text-white text-sm px-4 py-2 border rounded-full"
+                onClick={handlePrepayToggle}
+            >
+              {showHideButtonText()} Prepay Products</button>
             <div className="overflow-x-auto rounded-md">
               <table className="table-auto table-transpose">
                 <tbody>
-                <tr className="rounded">{headerCols()}</tr>
+                <tr>{headerCols()}</tr>
                 {productRows()}
                 </tbody>
               </table>
@@ -211,7 +250,7 @@ export default function Grid(){
   return (
       <Layout>
         <div>
-          <h1 className="text-center text-4xl text-bold text-purple-800 font-bold my-4">The Octo Grid</h1>
+          <h1 className="text-center text-4xl text-bold text-purple-600 font-bold my-4">The Octo Grid</h1>
 
           { rateTable() }
         </div>

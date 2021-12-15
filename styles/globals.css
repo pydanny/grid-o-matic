@@ -33,21 +33,54 @@ tr td:first-child {
   color: white;
 }
 
-tr:not(:first-child) th {
-  text-align: left;
-  background-color: #9333ea;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  color: white
+tr td:first-child {
+    padding: 2px 8px;
 }
 
-th, td {
-  padding: 0.5rem 0.25rem;
+.table-transpose td,
+.table-transpose th {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    padding: 0.5rem 1rem;
 }
 
-tr:not(:first-child):nth-child(odd) {
-  background-color: #f0f0f0;
+.table-transpose td {
+    width: 250px;
+    min-height: 50px;
+    justify-content: center;
+    align-items: center;
 }
+
+
+
+
+.flag {
+  width: 100%;
+  height: 56px;
+  box-sizing: content-box;
+  padding-top: 15px;
+  position: relative;
+  background: #32557f;
+  color: #7eb4e2;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.flag::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 13px solid #7eb4e2;
+    border-left: 55px solid transparent;
+    border-right: 55px solid transparent;
+  }
+
 
 @tailwind base;
 @tailwind components;
