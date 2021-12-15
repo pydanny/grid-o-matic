@@ -1,5 +1,5 @@
 module.exports = {
   reactStrictMode: true,
-  basePath: "/octogrid/",
+  basePath: "/octogrid",
   assetPrefix: "/octogrid/"
 }
