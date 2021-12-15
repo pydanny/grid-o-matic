@@ -37,7 +37,28 @@ export default function Home() {
             <Head>
                 <title>Octogrid</title>
                 <meta name="description" content="Discover Octopus plans!" />
-                <link rel="icon" href="/favicon.ico" />
+                <link
+                  rel="apple-touch-icon"
+                  sizes="180x180"
+                  href="/branding/favicons/apple-touch-icon.png"
+                />
+                <link
+                  rel="icon"
+                  type="image/png"
+                  sizes="32x32"
+                  href="/branding/favicons/favicon-32x32.png"
+                />
+                <link
+                  rel="icon"
+                  type="image/png"
+                  sizes="16x16"
+                  href="/branding/favicons/favicon-16x16.png"
+                />
+                <link
+                  rel="mask-icon"
+                  href="/branding/favicons/safari-pinned-tab.svg"
+                  color="#f050f8"
+                />                  
             </Head>
 
             <main>

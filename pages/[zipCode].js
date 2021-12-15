@@ -207,6 +207,31 @@ export default function Grid(){
 
   return (
       <Layout>
+        <Head>
+         <link
+          rel="apple-touch-icon"
+            sizes="180x180"
+            href="/branding/favicons/apple-touch-icon.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/branding/favicons/favicon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/branding/favicons/favicon-16x16.png"
+          />
+          <link
+            rel="mask-icon"
+            href="/branding/favicons/safari-pinned-tab.svg"
+            color="#f050f8"
+          />            
+        </Head>
+
         <div>
           <h1 className="text-center text-4xl text-bold text-purple-800 font-bold my-4">The Octo Grid</h1>
 
