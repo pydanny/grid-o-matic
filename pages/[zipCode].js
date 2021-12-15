@@ -121,11 +121,11 @@ export default function Grid(){
   const TDSP = zipCodeToTdsp[zipCode]
 
   const productFields = [
-      ["", "displayName"],
-      ["Rate", "rates"],
-      ["Term", "term"],
-      ["Description", "description"],
-      ["Prepay", "prepay"],
+    ["", "displayName"],
+    ["Rate", "rates"],
+    ["Term", "term"],
+    ["Description", "description"],
+    ["Prepay", "prepay"],
   ]
 
   // const text = getProductRatesUsingTDSP(TDSP)
@@ -137,8 +137,8 @@ export default function Grid(){
   // Toggle me to see a different query
   const possibly_better_text = getMoreProductDetailsByTDSP(TDSP)
   const {data, error} = useSWR(
-    possibly_better_text,
-    fetcher
+      possibly_better_text,
+      fetcher
   )
 
   const rateTable = () => {
@@ -193,10 +193,10 @@ export default function Grid(){
           <div>
             <p className="text-center text-2xl pb-4">Showing plans available in {zipCode}</p>
             <div className="overflow-x-auto rounded-md">
-              <table className="table-auto rounded">
+              <table className="table-auto rounded table-transpose">
                 <tbody>
-                  <tr className="rounded">{headerCols()}</tr>
-                  {productRows()}
+                <tr className="rounded">{headerCols()}</tr>
+                {productRows()}
                 </tbody>
               </table>
             </div>
