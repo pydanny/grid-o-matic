@@ -164,10 +164,10 @@ export default function Grid(){
     "OCTOPLUS-24M",
     "OCTOPLUS-12M",
     "OCTOPLUS-36M"
-]
+  ]
 
   const noSolar = [
-      "OCTOPUS-DRIVE-365-DAY-FIXED",
+    "OCTOPUS-DRIVE-365-DAY-FIXED",
   ]
 
   const rateTable = () => {
@@ -251,13 +251,13 @@ export default function Grid(){
                 className="text-white text-sm px-4 py-2 border rounded-full mx-2 mb-4 bg-fuchsia-500 hover:bg-fuchsia-600 border-0"
                 onClick={handlePrepayToggle}
             >
-               Show {(showPrepay) ? "Post-Pay" : "Prepay"} Products</button>
+              Show {(showPrepay) ? "Post-Pay" : "Prepay"} Products</button>
         )
       }
 
       const getSignUpButton = (product) => {
         return(
-            <a className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-1 rounded" href={`https://octopusenergy.com/quick-start?product=${product.id}&zipcode=${zipCode}`}>Get Started</a>
+            <a className="bg-fuchsia-500 hover:bg-fuchsia-600 text-white px-4 py-1 rounded" href={`https://octopusenergy.com/quick-start?product=${product.id}&zipcode=${zipCode}`}>Get Started</a>
 
         )
       }
@@ -284,38 +284,38 @@ export default function Grid(){
   return (
       <div>
         <Layout>
-        <Head>
-         <link
-          rel="apple-touch-icon"
-            sizes="180x180"
-            href="/branding/favicons/apple-touch-icon.png"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="/branding/favicons/favicon-32x32.png"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="/branding/favicons/favicon-16x16.png"
-          />
-          <link
-            rel="mask-icon"
-            href="/branding/favicons/safari-pinned-tab.svg"
-            color="#f050f8"
-          />
-        </Head>
+          <Head>
+            <link
+                rel="apple-touch-icon"
+                sizes="180x180"
+                href="/branding/favicons/apple-touch-icon.png"
+            />
+            <link
+                rel="icon"
+                type="image/png"
+                sizes="32x32"
+                href="/branding/favicons/favicon-32x32.png"
+            />
+            <link
+                rel="icon"
+                type="image/png"
+                sizes="16x16"
+                href="/branding/favicons/favicon-16x16.png"
+            />
+            <link
+                rel="mask-icon"
+                href="/branding/favicons/safari-pinned-tab.svg"
+                color="#f050f8"
+            />
+          </Head>
 
-        <div>
-          <h1 className="text-center text-4xl text-bold text-fuchsia-500 font-bold my-4">The Octo Grid</h1>
+          <div>
+            <h1 className="text-center text-4xl text-bold text-cyan-300 font-bold my-4">The Octo Grid</h1>
 
-          { rateTable() }
-        </div>
-      </Layout>
-      <style jsx global>{`
+            { rateTable() }
+          </div>
+        </Layout>
+        <style jsx global>{`
         body {
           background-color: #190648;
         }
