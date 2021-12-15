@@ -51,10 +51,11 @@ tr td:first-child {
 /* Row description labels*/
 .table-transpose th {
     justify-content: flex-end;
+    text-align: right;
     font-weight: normal;
     padding: 0.5rem 0;
     color: #dedede;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
 }
 
 .table-transpose td {
@@ -89,8 +90,10 @@ tr td:first-child {
 }
 
 /* Description row */
+.table-transpose td:nth-child(5),
+.table-transpose th:nth-child(5),
 .table-transpose td:nth-child(7),
-.table-transpose th:nth-child(7){
+.table-transpose th:nth-child(7) {
     height: 75px !important;
 }
 
