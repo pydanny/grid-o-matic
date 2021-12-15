@@ -248,7 +248,7 @@ export default function Grid(){
       const prepayProductToggleButton = () => {
         return (
             <button
-                className="text-white text-sm px-4 py-2 border rounded-full mx-2 bg-purple-600 hover:bg-purple-700"
+                className="text-white text-sm px-4 py-2 border rounded-full mx-2 mb-4 bg-fuchsia-500 hover:bg-fuchsia-600 border-0"
                 onClick={handlePrepayToggle}
             >
                Show {(showPrepay) ? "Post-Pay" : "Prepay"} Products</button>
@@ -310,7 +310,7 @@ export default function Grid(){
         </Head>
 
         <div>
-          <h1 className="text-center text-4xl text-bold text-purple-600 font-bold my-4">The Octo Grid</h1>
+          <h1 className="text-center text-4xl text-bold text-fuchsia-500 font-bold my-4">The Octo Grid</h1>
 
           { rateTable() }
         </div>
