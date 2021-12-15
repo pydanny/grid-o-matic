@@ -89,8 +89,8 @@ tr td:first-child {
 }
 
 /* Description row */
-.table-transpose td:nth-child(6),
-.table-transpose th:nth-child(6){
+.table-transpose td:nth-child(7),
+.table-transpose th:nth-child(7){
     height: 75px !important;
 }
 

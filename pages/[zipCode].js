@@ -130,10 +130,10 @@ export default function Grid(){
     ["", "displayName"],
     ["", "accent"],
     ["Rate", "rates"],
-    ["Solar", "solar"],
+    ["Solar Buyback", "solar"],
+    ["Credit Check Needed", "prepay"],
     ["Term", "term"],
     ["Description", "description"],
-    ["Prepay", "prepay"],
     ["Get Started", "getStarted"]
   ]
 
@@ -251,13 +251,13 @@ export default function Grid(){
                 className="text-white text-sm px-4 py-2 border rounded-full mx-2 mb-4 bg-fuchsia-500 hover:bg-fuchsia-600 border-0"
                 onClick={handlePrepayToggle}
             >
-              Show {(showPrepay) ? "Post-Pay" : "Prepay"} Products</button>
+              Show Plans That {(!showPrepay) ? "Do Not" : ""} Require Credit Check</button>
         )
       }
 
       const getSignUpButton = (product) => {
         return(
-            <a className="bg-fuchsia-500 hover:bg-fuchsia-600 text-white px-4 py-1 rounded" href={`https://octopusenergy.com/quick-start?product=${product.id}&zipcode=${zipCode}`}>Get Started</a>
+            <a className="bg-fuchsia-500 hover:bg-fuchsia-600 text-white px-4 py-1 rounded" href={`https://octopusenergy.com/quick-start?krakenid=${product.id}&zipcode=${zipCode}`}>Get Started</a>
 
         )
       }
@@ -310,7 +310,7 @@ export default function Grid(){
           </Head>
 
           <div>
-            <h1 className="text-center text-4xl text-bold text-cyan-300 font-bold my-4">The Octo Grid</h1>
+            <h1 className="text-center text-4xl text-bold text-cyan-300 font-bold my-4">Octo Grid</h1>
 
             { rateTable() }
           </div>
