@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react';
 
@@ -10,6 +11,9 @@ import Checkbox from "../components/checkbox";
 import Layout from "../components/layout";
 import zipCodeToTdsp from "../lib/zipcodeToTdsp"
 import LoadingSpinner from "../components/loading-spinner";
+
+
+import TriangleAccent from '../public/triangle.png'
 
 const url = 'https://api.oeus-kraken.energy/v1/graphql/'
 
@@ -124,7 +128,9 @@ export default function Grid(){
 
   const productFields = [
     ["", "displayName"],
+    ["", "accent"],
     ["Rate", "rates"],
+    ["Solar", "solar"],
     ["Term", "term"],
     ["Description", "description"],
     ["Prepay", "prepay"],
@@ -159,6 +165,10 @@ export default function Grid(){
     "OCTOPLUS-36M"
 ]
 
+  const noSolar = [
+      "OCTOPUS-DRIVE-365-DAY-FIXED",
+  ]
+
   const rateTable = () => {
     if (error) return <div>Oops!</div>
     if (!data) {
@@ -168,7 +178,7 @@ export default function Grid(){
       const products = data.products
 
       const filteredProducts = products.filter(product => {
-        return (validProductCode.includes(product.code) && product.prepay == showPrepay)
+        return (validProductCode.includes(product.code) && product.prepay === showPrepay)
       })
 
       const stylizeProductName = (productName) => {
@@ -183,7 +193,13 @@ export default function Grid(){
 
       const headerCols = () => {
         return productFields.map((productPair, index) => {
-          return(<th key={`header-${productPair[0]}`}>{productPair[0]}&nbsp;</th>)
+          if (productPair[0]) {
+            return(<th key={`header-${productPair[0]}`}>{productPair[0]}&nbsp;</th>)
+          } else if (productPair[1] === "accent") {
+            return(<th key={`header-${productPair[1]}`} className="accentCell">&nbsp;</th>)
+          } else {
+            return(<th key={`header-${productPair[1]}`}>&nbsp;</th>)
+          }
         })
       }
 
@@ -194,14 +210,21 @@ export default function Grid(){
             const tdspConsumptionRate = parseFloat(product.rates.tdspRates.consumptionRates[0].pricePerUnit);
             const standingRate = parseFloat(product.rates.tdspRates.standingRates[0].pricePerUnit/1000);
             const calculatedRate = loadZoneRate + tdspConsumptionRate + standingRate;
+            const priceAsString = calculatedRate.toFixed(1).split(".0")[0];
 
-            return(<td key={productPair[0] + "-" + index}>{calculatedRate.toFixed(1).split(".0")[0]}&#162;</td>)
+            return(<td key={productPair[0] + "-" + index}><span className="font-bold text-xl">{priceAsString}</span>&#162; per kWh</td>)
           } else if (productPair[1] === "displayName") {
-            return(<td key={productPair[0] + "-" + index} className='whitespace-nowrap'>{stylizeProductName(product[productPair[1]])}</td>)
+            return(<td key={productPair[0] + "-" + index} className='whitespace-nowrap productCell'>{stylizeProductName(product[productPair[1]])}</td>)
           } else if (productPair[1] === "prepay") {
             return(<td key={productPair[0] + "-" + index}><Checkbox value={product[productPair[1]]} /></td>)
           } else if (productPair[1] === "term") {
             return(<td key={productPair[0] + "-" + index}>{product[productPair[1]]}-month</td>)
+          } else if (productPair[1] === "solar") {
+            return(<td key={productPair[0] + "-" + index}><Checkbox value={!noSolar.includes(product.code)} /></td>)
+          } else if (productPair[1] === "accent") {
+            return(<td key={productPair[1] + "-" + index} className="accentCell">
+              <Image src={TriangleAccent} className="triangleAccent" />
+            </td>)
           } else {
             return(<td key={productPair[0] + "-" + index}>{product[productPair[1]]}</td>)
           }
@@ -219,21 +242,22 @@ export default function Grid(){
         setShowPrepay(!showPrepay);
       }
 
-      const showHideButtonText = () => {
-        if (showPrepay) {
-          return "Hide";
-        }
-        return "Show";
+      const prepayProductToggleButton = () => {
+        return (
+            <button
+                className="text-white text-sm px-4 py-2 border rounded-full mx-2 bg-purple-600 hover:bg-purple-700"
+                onClick={handlePrepayToggle}
+            >
+               Show {(showPrepay) ? "Post-Pay" : "Prepay"} Products</button>
+        )
       }
 
       return (
           <div>
             <p className="text-center text-2xl pb-4">Showing plans available in {zipCode}</p>
-            <button
-                className="bg-purple-600 hover:bg-purple-700 text-white text-sm px-4 py-2 border rounded-full"
-                onClick={handlePrepayToggle}
-            >
-              {showHideButtonText()} Prepay Products</button>
+            <div className="text-center mb-3">
+              {prepayProductToggleButton()}
+            </div>
             <div className="overflow-x-auto rounded-md">
               <table className="table-auto table-transpose">
                 <tbody>
@@ -248,7 +272,7 @@ export default function Grid(){
   }
 
   return (
-      <Layout>
+      <Layout bgColor="#190648">
         <div>
           <h1 className="text-center text-4xl text-bold text-purple-600 font-bold my-4">The Octo Grid</h1>
 

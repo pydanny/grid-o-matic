@@ -18,8 +18,10 @@ export default function Home() {
         const zipCode = event.target.zipCode.value
         if (zipCode in zipCodeToTdsp){
             router.push('/'+zipCode)
+        } else {
+            setError("Please enter a valid zip code.")
         }
-        setError("Please enter a valid zip code.")
+
     }
 
     function handleChange(event){
