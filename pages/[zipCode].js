@@ -148,7 +148,6 @@ export default function Grid(){
     } else {
       console.log(data)
       const products = data.products
-      // console.log(products)
 
       const stylizeProductName = (productName) => {
         if (productName.indexOf("Octopus") > -1) {
@@ -177,6 +176,10 @@ export default function Grid(){
             return(<td key={productPair[0]-index}>{calculatedRate.toFixed(1).split(".0")[0]}&#162;</td>)
           } else if (productPair[1] == "displayName") {
             return(<td key={productPair[0]-index} className='whitespace-nowrap'>{stylizeProductName(product[productPair[1]])}</td>)
+          } else if (productPair[1] == "prepay") {
+            return(<td key={productPair[0]-index}><Checkbox value={product[productPair[1]]} /></td>)
+          } else if (productPair[1] == "term") {
+            return(<td key={productPair[0]-index}>{product[productPair[1]]}-month</td>)
           } else {
             return(<td key={productPair[0]-index}>{product[productPair[1]]}</td>)
           }
@@ -193,7 +196,7 @@ export default function Grid(){
           <div>
             <p className="text-center text-2xl pb-4">Showing plans available in {zipCode}</p>
             <div className="overflow-x-auto rounded-md">
-              <table className="table-auto rounded table-transpose">
+              <table className="table-auto table-transpose">
                 <tbody>
                 <tr className="rounded">{headerCols()}</tr>
                 {productRows()}
