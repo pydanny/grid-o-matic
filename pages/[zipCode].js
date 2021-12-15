@@ -59,7 +59,7 @@ function getMoreProductDetailsByTDSP(TDSP) {
       isWholesale
       prepay
       term
-      rates(serviceProvider:AEP_TNC){
+      rates(serviceProvider:${TDSP}){
         agnosticRates{
           consumptionRates{
             pricePerUnit
@@ -120,18 +120,26 @@ export default function Grid(){
 
   const TDSP = zipCodeToTdsp[zipCode]
 
-  const text = getProductRatesUsingTDSP(TDSP)
-  const {data, error} = useSWR(
-      text,
-      fetcher
-  )
+  const productFields = [
+      ["", "displayName"],
+      ["Rate", "rates"],
+      ["Term", "term"],
+      ["Description", "description"],
+      ["Prepay", "prepay"],
+  ]
+
+  // const text = getProductRatesUsingTDSP(TDSP)
+  // const {data, error} = useSWR(
+  //     text,
+  //     fetcher
+  // )
 
   // Toggle me to see a different query
-  // const possibly_better_text = getMoreProductDetailsByTDSP(TDSP)
-  // const {data, error} = useSWR(
-  //   possibly_better_text,
-  //   fetcher
-  // )
+  const possibly_better_text = getMoreProductDetailsByTDSP(TDSP)
+  const {data, error} = useSWR(
+    possibly_better_text,
+    fetcher
+  )
 
   const rateTable = () => {
     if (error) return <div>Oops!</div>
@@ -139,12 +147,8 @@ export default function Grid(){
       return <LoadingSpinner />
     } else {
       console.log(data)
-      const productData = data.productsWithConciseApplicableRates
-
-      const productNames = productData.map(product => product.displayName)
-      const productIds = productData.map(product => product.id)
-      const products = productsToObject(productData)
-      console.log(products)
+      const products = data.products
+      // console.log(products)
 
       const stylizeProductName = (productName) => {
         if (productName.indexOf("Octopus") > -1) {
@@ -156,47 +160,43 @@ export default function Grid(){
         }
       }
 
+      const headerCols = () => {
+        return productFields.map((productPair, index) => {
+          return(<th key={`header-${productPair[0]}`}>{productPair[0]}&nbsp;</th>)
+        })
+      }
+
+      const getProductCols = (product) => {
+        return productFields.map((productPair, index) => {
+          if (productPair[1] == "rates") {
+            const loadZoneRate = parseFloat(product.rates.loadZoneRates.consumptionRates[0].pricePerUnit);
+            const tdspConsumptionRate = parseFloat(product.rates.tdspRates.consumptionRates[0].pricePerUnit);
+            const standingRate = parseFloat(product.rates.tdspRates.standingRates[0].pricePerUnit/1000);
+            const calculatedRate = loadZoneRate + tdspConsumptionRate + standingRate;
+
+            return(<td key={productPair[0]-index}>{calculatedRate.toFixed(1).split(".0")[0]}&#162;</td>)
+          } else if (productPair[1] == "displayName") {
+            return(<td key={productPair[0]-index} className='whitespace-nowrap'>{stylizeProductName(product[productPair[1]])}</td>)
+          } else {
+            return(<td key={productPair[0]-index}>{product[productPair[1]]}</td>)
+          }
+        })
+      }
+
+      const productRows = () => {
+        return products.map((product, index) => {
+          return(<tr key={`product-${product.id}-${index}`}>{getProductCols(product)}</tr>)
+        })
+      }
+
       return (
           <div>
             <p className="text-center text-2xl pb-4">Showing plans available in {zipCode}</p>
             <div className="overflow-x-auto rounded-md">
-              <table className="table-auto border rounded border-purple-600">
+              <table className="table-auto rounded">
                 <tbody>
-                <tr className="border text-white border-purple-600">
-                  <th style={darkSquare}></th>
-                  {productNames.map((name) => (
-                      <th key={name} className="whitespace-nowrap px-4">{stylizeProductName(name)}</th>
-                  ))}
-                </tr>
-                <tr>
-                  <th className="px-4">Prepay</th>
-                  {productIds.map((id) => (
-                      <td key={id}><Checkbox value={products[id].prepay} /></td>
-                  ))
-                  }
-                </tr>
-
-                <tr>
-                  <th className="px-4">Term</th>
-                  {productIds.map((id) => (
-                      <td key={id}>{products[id].term} months</td>
-                  ))
-                  }
-                </tr>
-                <tr>
-                  <th className="px-4">Description</th>
-                  {productIds.map((id) => (
-                      <td key={id}>{products[id].description}</td>
-                  ))
-                  }
-                </tr>
-                <tr>
-                  <th className="px-4">Rates</th>
-                  {productIds.map((id) => (
-                      <td key={id}>{products[id].rates[0].totalApplicableRate}</td>
-                  ))
-                  }
-                </tr>
+                  <tr className="rounded">{headerCols()}</tr>
+                  {productRows()}
                 </tbody>
               </table>
             </div>
