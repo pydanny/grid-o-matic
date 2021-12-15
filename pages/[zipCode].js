@@ -217,7 +217,7 @@ export default function Grid(){
           } else if (productPair[1] === "displayName") {
             return(<td key={productPair[0] + "-" + index} className='whitespace-nowrap productCell'>{stylizeProductName(product[productPair[1]])}</td>)
           } else if (productPair[1] === "prepay") {
-            return(<td key={productPair[0] + "-" + index}><Checkbox value={product[productPair[1]]} size="30" /></td>)
+            return(<td key={productPair[0] + "-" + index}><Checkbox value={!product[productPair[1]]} size="30" /></td>)
           } else if (productPair[1] === "term") {
             return(<td key={productPair[0] + "-" + index}>{product[productPair[1]]}-month</td>)
           } else if (productPair[1] === "solar") {
