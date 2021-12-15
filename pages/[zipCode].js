@@ -134,6 +134,7 @@ export default function Grid(){
     ["Term", "term"],
     ["Description", "description"],
     ["Prepay", "prepay"],
+    ["Choose Plan", "chooseProduct"]
   ]
 
   // const text = getProductRatesUsingTDSP(TDSP)
@@ -221,7 +222,9 @@ export default function Grid(){
             return(<td key={productPair[0] + "-" + index}>{product[productPair[1]]}-month</td>)
           } else if (productPair[1] === "solar") {
             return(<td key={productPair[0] + "-" + index}><Checkbox value={!noSolar.includes(product.code)} /></td>)
-          } else if (productPair[1] === "accent") {
+          } else if (productPair[1] === "chooseProduct") {
+            return(<td key={productPair[0] + "-" + index}>{getSignUpButton(product)}</td>)
+          }  else if (productPair[1] === "accent") {
             return(<td key={productPair[1] + "-" + index} className="accentCell">
               <Image src={TriangleAccent} className="triangleAccent" />
             </td>)
@@ -249,6 +252,13 @@ export default function Grid(){
                 onClick={handlePrepayToggle}
             >
                Show {(showPrepay) ? "Post-Pay" : "Prepay"} Products</button>
+        )
+      }
+
+      const getSignUpButton = (product) => {
+        return(
+            <a className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-1 rounded-full" href={`https://octopusenergy.com/quick-start?product=${product.id}&zipcode=${zipCode}`}>Choose Plan</a>
+
         )
       }
 

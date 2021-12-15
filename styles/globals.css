@@ -50,6 +50,7 @@ tr td:first-child {
     font-weight: normal;
     padding: 0.5rem 0;
     color: #333333;
+    white-space: nowrap;
 }
 
 .table-transpose td {
@@ -80,7 +81,8 @@ tr td:first-child {
 }
 
 /* Description row */
-.table-transpose td:nth-child(6) {
+.table-transpose td:nth-child(6),
+.table-transpose th:nth-child(6){
     height: 75px !important;
 }
 
